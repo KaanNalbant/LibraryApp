@@ -89,9 +89,10 @@ spring.datasource.password
 
 ## 🚀 Canlı Linkler (Yerel Çalışma)
 Proje şu an yerel ortamda (Localhost) tam fonksiyonel olarak çalışmaktadır:
-- **Frontend Panel (SPA)**: [http://localhost:5173](http://localhost:5173)
-- **Backend API Server**: [http://localhost:8080](http://localhost:8080)
-- **Swagger API Dökümantasyonu**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+- **Frontend Panel (SPA)**: [https://library-frontend-maqw.onrender.com](https://library-frontend-maqw.onrender.com)
+- **Backend API Server**: [https://libraryapp-3hqg.onrender.com](https://libraryapp-3hqg.onrender.com)
+- **Swagger API Dökümantasyonu**: [https://libraryapp-3hqg.onrender.com/swagger-ui/index.html](https://libraryapp-3hqg.onrender.com/swagger-ui/index.html)
+
 
 > **Not:** Üretim (Production) ortamına alırken `application.properties` ve `api.js` dosyalarındaki adresleri gerçek sunucu IP/Domain adresleri ile değiştirmeniz yeterlidir.
 

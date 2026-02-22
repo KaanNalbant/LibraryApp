@@ -1,6 +1,5 @@
 package com.alisimsek.LibraryManagementProject.service;
 
-
 import com.alisimsek.LibraryManagementProject.entity.Book;
 import com.alisimsek.LibraryManagementProject.repository.BookRepository;
 import jakarta.transaction.Transactional;
@@ -35,11 +34,14 @@ public class BookService {
     }
 
     public Book update(Long id, Book book) {
+        bookRepository.findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException(id + " Güncellemeye çalıştığınız kitap sistemde bulunamadı. !!!."));
 
-        Optional<Book> bookFromDb = bookRepository.findById(id);
+        Optional<Book> isBookExist = bookRepository.findByNameAndAuthor(book.getName(), book.getAuthor());
 
-        if (bookFromDb.isEmpty()) {
-            throw new RuntimeException(id + "Güncellemeye çalıştığınız kitap sistemde bulunamadı. !!!.");
+        if (isBookExist.isPresent() && !isBookExist.get().getId().equals(id)) {
+            throw new RuntimeException("Bu kitap farklı bir ID ile daha önce sisteme kayıt olmuştur !!!");
         }
 
         book.setId(id);
@@ -59,4 +61,3 @@ public class BookService {
         return bookRepository.findByCategoryId(id);
     }
 }
-

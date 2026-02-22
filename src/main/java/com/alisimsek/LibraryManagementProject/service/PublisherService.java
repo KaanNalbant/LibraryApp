@@ -1,6 +1,5 @@
 package com.alisimsek.LibraryManagementProject.service;
 
-
 import com.alisimsek.LibraryManagementProject.dto.response.PublisherResponse;
 import com.alisimsek.LibraryManagementProject.entity.Publisher;
 import com.alisimsek.LibraryManagementProject.mapper.PublisherMapper;
@@ -23,13 +22,15 @@ public class PublisherService {
     }
 
     public PublisherResponse getById(Long id) {
-        Publisher p = publisherRepository.findById(id).orElseThrow(() -> new RuntimeException(id + "id li Yayın Evi Bulunamadı !!!"));
+        Publisher p = publisherRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id + "id li Yayın Evi Bulunamadı !!!"));
         return publisherMapper.asOutput(p);
     }
 
     public Publisher create(Publisher request) {
 
-        Optional<Publisher> isPublisherExist = publisherRepository.findByNameAndEstablishmentYear(request.getName(), request.getEstablishmentYear());
+        Optional<Publisher> isPublisherExist = publisherRepository.findByNameAndEstablishmentYear(request.getName(),
+                request.getEstablishmentYear());
 
         if (isPublisherExist.isEmpty()) {
             return publisherRepository.save(request);
@@ -38,17 +39,15 @@ public class PublisherService {
     }
 
     public Publisher update(Long id, Publisher request) {
+        publisherRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        id + " Güncellemeye çalıştığınız yayın evi sistemde bulunamadı. !!!."));
 
-        Optional<Publisher> publisherFromDb = publisherRepository.findById(id);
+        Optional<Publisher> isPublisherExist = publisherRepository.findByNameAndEstablishmentYear(request.getName(),
+                request.getEstablishmentYear());
 
-        Optional<Publisher> isPublisherExist = publisherRepository.findByNameAndEstablishmentYear(request.getName(), request.getEstablishmentYear());
-
-        if (publisherFromDb.isEmpty()) {
-            throw new RuntimeException(id + "Güncellemeye çalıştığınız yayın evi sistemde bulunamadı. !!!.");
-        }
-
-        if (isPublisherExist.isPresent()) {
-            throw new RuntimeException("Bu yayın evi daha önce sisteme kayıt olmuştur !!!");
+        if (isPublisherExist.isPresent() && !isPublisherExist.get().getId().equals(id)) {
+            throw new RuntimeException("Bu yayın evi farklı bir ID ile daha önce sisteme kayıt olmuştur !!!");
         }
 
         request.setId(id);

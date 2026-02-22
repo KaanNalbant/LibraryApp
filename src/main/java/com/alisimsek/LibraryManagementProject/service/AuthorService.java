@@ -23,11 +23,13 @@ public class AuthorService {
     }
 
     public AuthorResponse getById(Long id) {
-        return authorMapper.asOutput(authorRepository.findById(id).orElseThrow(() -> new RuntimeException(id + "id li Yazar Bulunamadı !!!")));
+        return authorMapper.asOutput(authorRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id + "id li Yazar Bulunamadı !!!")));
     }
 
     public AuthorResponse create(AuthorRequest request) {
-        Optional<Author> isAuthorExist = authorRepository.findByNameAndBirthDateAndCountry(request.getName(), request.getBirthDate(), request.getCountry());
+        Optional<Author> isAuthorExist = authorRepository.findByNameAndBirthDateAndCountry(request.getName(),
+                request.getBirthDate(), request.getCountry());
 
         if (isAuthorExist.isEmpty()) {
             Author authorSaved = authorRepository.save(authorMapper.asEntity(request));
@@ -37,21 +39,19 @@ public class AuthorService {
     }
 
     public AuthorResponse update(Long id, AuthorRequest request) {
+        Author authorFromDb = authorRepository.findById(id)
+                .orElseThrow(
+                        () -> new RuntimeException(id + " Güncellemeye çalıştığınız yazar sistemde bulunamadı. !!!."));
 
-        Optional<Author> authorFromDb = authorRepository.findById(id);
+        Optional<Author> isAuthorExist = authorRepository.findByNameAndBirthDateAndCountry(request.getName(),
+                request.getBirthDate(), request.getCountry());
 
-        Optional<Author> isAuthorExist = authorRepository.findByNameAndBirthDateAndCountry(request.getName(), request.getBirthDate(), request.getCountry());
-
-        if (authorFromDb.isEmpty()) {
-            throw new RuntimeException(id + "Güncellemeye çalıştığınız yazar sistemde bulunamadı. !!!.");
+        if (isAuthorExist.isPresent() && !isAuthorExist.get().getId().equals(id)) {
+            throw new RuntimeException("Bu yazar daha önce farklı bir ID ile sisteme kayıt olmuştur !!!");
         }
 
-        if (isAuthorExist.isPresent()) {
-            throw new RuntimeException("Bu yazar daha önce sisteme kayıt olmuştur !!!");
-        }
-        Author author = authorFromDb.get();
-        authorMapper.update(author, request);
-        return authorMapper.asOutput(authorRepository.save(author));
+        authorMapper.update(authorFromDb, request);
+        return authorMapper.asOutput(authorRepository.save(authorFromDb));
     }
 
     public void deleteById(Long id) {
@@ -62,6 +62,5 @@ public class AuthorService {
             throw new RuntimeException(id + "id li Yazar sistemde bulunamadı !!!");
         }
     }
-
 
 }

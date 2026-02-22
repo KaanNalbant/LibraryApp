@@ -1,6 +1,5 @@
 package com.alisimsek.LibraryManagementProject.controller;
 
-
 import com.alisimsek.LibraryManagementProject.entity.Category;
 import com.alisimsek.LibraryManagementProject.service.CategoryService;
 import lombok.RequiredArgsConstructor;
@@ -42,10 +41,8 @@ public class CategoryController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public String delete(@PathVariable("id") Long id) {
-        return categoryService.deleteById(id);
+    public void delete(@PathVariable("id") Long id) {
+        categoryService.deleteById(id);
     }
 
-
 }
-

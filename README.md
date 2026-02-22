@@ -82,7 +82,60 @@ spring.datasource.url
 spring.datasource.username  
 spring.datasource.password
 
-## Lisans
+## Frontend Teknolojileri
+<code><img width="50" src="https://user-images.githubusercontent.com/25181517/183897182-543a2394-c365-458b-bc75-ec228491c143.png" alt="React" title="React"/></code>
+<code><img width="50" src="https://vitejs.dev/logo.svg" alt="Vite" title="Vite"/></code>
+<code><img width="50" src="https://raw.githubusercontent.com/lucide-icons/lucide/main/icons/package.svg" alt="Lucide" title="Lucide"/></code>
 
+## 🚀 Canlı Linkler (Yerel Çalışma)
+Proje şu an yerel ortamda (Localhost) tam fonksiyonel olarak çalışmaktadır:
+- **Frontend Panel (SPA)**: [http://localhost:5173](http://localhost:5173)
+- **Backend API Server**: [http://localhost:8080](http://localhost:8080)
+- **Swagger API Dökümantasyonu**: [http://localhost:8080/swagger-ui/index.html](http://localhost:8080/swagger-ui/index.html)
+
+> **Not:** Üretim (Production) ortamına alırken `application.properties` ve `api.js` dosyalarındaki adresleri gerçek sunucu IP/Domain adresleri ile değiştirmeniz yeterlidir.
+
+## 🛠️ Kurulum ve Çalıştırma
+
+### 1. Veritabanı ve Docker
+Proje MySQL'i Docker üzerinden ayağa kaldırır.
+```bash
+# Sadece veritabanını başlatmak için
+docker-compose up -d db
+```
+
+### 2. Backend (Java 17+)
+**Önemli:** Proje Spring Boot 3 kullandığı için **Java 17** veya üzeri bir sürüm gereklidir.
+```bash
+# Windows (JAVA_HOME set edilmemişse terminale özel set edebilirsiniz)
+$env:JAVA_HOME = "C:\Program Files\Java\jdk-17"
+./mvnw spring-boot:run
+```
+
+### 3. Frontend (React + Vite)
+```bash
+cd library-frontend
+npm install
+npm run dev
+```
+
+### 4. Örnek Veri Yükleme (Seeding)
+Requirement gereği her sayfada 5 adet veri bulunması için şu komutu çalıştırın:
+```bash
+# Ana dizinde
+node seed.js
+```
+
+## 📋 Proje İsterleri Karşılama Durumu
+- [x] React Router SPA Yapısı
+- [x] 5 Ana Sayfa (Yayımcı, Kategori, Kitap, Yazar, Kitap Alma)
+- [x] Tüm sayfalarda tam CRUD desteği
+- [x] Toast Bildirim Sistemi (Alert yerine)
+- [x] Her sayfada 5 adet anlamlı örnek veri
+- [x] Modern, Premium Glassmorphism Tasarım
+- [x] 1200px Sabit Genişlik Uyumu
+
+## Lisans
 [MIT](https://choosealicense.com/licenses/mit/)
+
 

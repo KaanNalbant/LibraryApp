@@ -1,0 +1,141 @@
+.data-table-container {
+    background: var(--surface);
+    border-radius: 20px;
+    border: 1px solid var(--border);
+    overflow: hidden;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+
+.table-header {
+    padding: 24px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid var(--border);
+}
+
+.header-left h2 {
+    font-size: 20px;
+    font-weight: 600;
+}
+
+.count {
+    font-size: 13px;
+    color: var(--text-muted);
+}
+
+.header-right {
+    display: flex;
+    gap: 16px;
+    align-items: center;
+}
+
+.search-bar {
+    position: relative;
+    width: 260px;
+}
+
+.search-bar svg {
+    position: absolute;
+    left: 12px;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-muted);
+}
+
+.search-bar input {
+    padding-left: 40px;
+}
+
+.add-btn {
+    background: var(--primary);
+    color: white;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 10px 18px;
+}
+
+.add-btn:hover {
+    background: var(--primary-hover);
+}
+
+.table-wrapper {
+    overflow-x: auto;
+}
+
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+th {
+    background: rgba(255, 255, 255, 0.02);
+    text-align: left;
+    padding: 16px 24px;
+    font-size: 13px;
+    font-weight: 600;
+    text-transform: uppercase;
+    color: var(--text-muted);
+    letter-spacing: 0.5px;
+}
+
+td {
+    padding: 18px 24px;
+    border-bottom: 1px solid var(--border);
+    font-size: 14px;
+}
+
+tr:last-child td {
+    border-bottom: none;
+}
+
+tr:hover td {
+    background: rgba(255, 255, 255, 0.01);
+}
+
+.actions-th,
+.actions-td {
+    text-align: right;
+    padding-right: 32px;
+}
+
+.actions-td {
+    display: flex;
+    justify-content: flex-end;
+    gap: 12px;
+}
+
+.edit-icon-btn,
+.delete-icon-btn {
+    width: 32px;
+    height: 32px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: rgba(255, 255, 255, 0.05);
+}
+
+.edit-icon-btn {
+    color: var(--primary);
+}
+
+.edit-icon-btn:hover {
+    background: var(--primary);
+    color: white;
+}
+
+.delete-icon-btn {
+    color: var(--danger);
+}
+
+.delete-icon-btn:hover {
+    background: var(--danger);
+    color: white;
+}
+
+.empty-row td {
+    text-align: center;
+    padding: 40px;
+    color: var(--text-muted);
+}

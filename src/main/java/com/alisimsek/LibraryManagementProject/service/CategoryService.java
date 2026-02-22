@@ -1,6 +1,5 @@
 package com.alisimsek.LibraryManagementProject.service;
 
-
 import com.alisimsek.LibraryManagementProject.entity.Book;
 import com.alisimsek.LibraryManagementProject.entity.Category;
 import com.alisimsek.LibraryManagementProject.repository.CategoryRepository;
@@ -21,7 +20,8 @@ public class CategoryService {
     }
 
     public Category getById(Long id) {
-        return categoryRepository.findById(id).orElseThrow(() -> new RuntimeException(id + "id li Kategori Bulunamadı !!!"));
+        return categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id + "id li Kategori Bulunamadı !!!"));
     }
 
     public Category create(Category request) {
@@ -34,33 +34,30 @@ public class CategoryService {
     }
 
     public Category update(Long id, Category request) {
-
-        Optional<Category> categoryFromDb = categoryRepository.findById(id);
+        categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(
+                        id + " Güncellemeye çalıştığınız kategori sistemde bulunamadı. !!!."));
 
         Optional<Category> isCategoryExist = categoryRepository.findByName(request.getName());
 
-        if (categoryFromDb.isEmpty()) {
-            throw new RuntimeException(id + "Güncellemeye çalıştığınız kategori sistemde bulunamadı. !!!.");
-        }
-
-        if (isCategoryExist.isPresent()) {
-            throw new RuntimeException("Bu kategori daha önce sisteme kayıt olmuştur !!!");
+        if (isCategoryExist.isPresent() && !isCategoryExist.get().getId().equals(id)) {
+            throw new RuntimeException("Bu kategori farklı bir ID ile daha önce sisteme kayıt olmuştur !!!");
         }
         request.setId(id);
         return categoryRepository.save(request);
     }
 
-    public String deleteById(Long id) {
-        Optional<Category> categoryFromDb = categoryRepository.findById(id);
+    public void deleteById(Long id) {
+        Category categoryFromDb = categoryRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException(id + " id'li Kategori sistemde bulunamadı!!!"));
+
         List<Book> booksInCategory = bookService.findByCategoryId(id);
 
-        if (!categoryFromDb.isPresent()) {
-            return id + " id li Kategori sistemde bulunamadı!!!";
-        } else if (!booksInCategory.isEmpty()) {
-            return id + " id li Kategoriye ait sistemde kayıtlı kitap mevcut! Silme işlemi yapılamadı.";
-        } else {
-            categoryRepository.delete(categoryFromDb.get());
-            return "Kategori silme işlemi başarılı";
+        if (!booksInCategory.isEmpty()) {
+            throw new RuntimeException(
+                    id + " id'li kategoriye ait sistemde kayıtlı kitap mevcut! Silme işlemi yapılamadı.");
         }
+
+        categoryRepository.delete(categoryFromDb);
     }
 }

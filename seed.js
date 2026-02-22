@@ -1,6 +1,6 @@
 const axios = require('axios');
 
-const API_BASE_URL = 'http://localhost:8080/api/v1';
+const API_BASE_URL = 'https://libraryapp-3hqg.onrender.com/api/v1';
 
 async function seed() {
     try {
